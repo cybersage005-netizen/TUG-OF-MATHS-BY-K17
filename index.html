@@ -200,10 +200,10 @@
 
         .battle-row {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            gap: 30px;
+            flex-wrap: nowrap;
         }
 
         .calculator {
@@ -288,8 +288,8 @@
         }
 
         .tug-war-central {
-            flex-grow: 1;
-            min-width: 450px;
+            flex: 0 1 auto;
+            min-width: 500px;
             padding: 20px 10px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 120px;
@@ -698,11 +698,25 @@
             display: none;
         }
 
-        @media (max-width: 1100px) {
-            .battle-row { justify-content: center; }
-            #question-text { font-size: 3rem; }
-            .k17-credits-bottom h2 { font-size: 2.5rem; }
-            .k17-credits-bottom .social-item { font-size: 1.5rem; padding: 12px 20px; }
+        @media (max-width: 1200px) {
+            .battle-row {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            .tug-war-central {
+                min-width: 90%;
+                order: 2;
+            }
+            .calculator {
+                width: 45%;
+                min-width: 280px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .calculator {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -748,7 +762,7 @@
                 <h1 id="question-text">5 + 3 = ?</h1>
             </div>
 
-            <!-- Main Battle Row -->
+            <!-- Main Battle Row - Calculators on sides, tug in middle -->
             <div class="battle-row">
                 <!-- Left Calculator -->
                 <div class="calculator calc-left" id="calcLeft">
