@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 K17's ULTIMATE Math Tug-of-War - 6 AWESOME THEMES!</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', cursive, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            transition: background 0.5s ease;
+        }
+
+        /* Main container */
+        .main-container {
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        /* Control buttons */
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .control-btn {
+            background: white;
+            border: 5px solid #333;
+            border-radius: 60px;
+            padding: 15px 25px;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 10px 0 #333;
+            transition: 0.3s;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 0 #333;
+        }
+
+        .control-btn.off {
+            opacity: 0.5;
+            background: #ccc;
+        }
+
+        /* Start Music Button - Big and Flashy */
+        .start-music-btn {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(145deg, gold, orange);
+            border: 8px solid white;
+            border-radius: 100px;
+            padding: 30px 60px;
+            font-size: 4rem;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 20px 0 #b8860b, 0 30px 30px rgba(0,0,0,0.5);
+            transition: 0.3s;
+            z-index: 2000;
+            text-align: center;
+            animation: startPulse 1.5s infinite;
+        }
+
+        .start-music-btn:hover {
+            transform: translate(-50%, -55px);
+            box-shadow: 0 25px 0 #b8860b, 0 35px 35px rgba(0,0,0,0.5);
+        }
+
+        .start-music-btn.hidden {
+            display: none;
+        }
+
+        @keyframes startPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* Theme selector bar */
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            padding: 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 60px;
+            backdrop-filter: blur(5px);
+        }
+
+        .theme-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 5px solid white;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 10px 0 rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.2) rotate(10deg);
+            box-shadow: 0 15px 0 rgba(0,0,0,0.2);
+        }
+
+        .theme-btn.active {
+            transform: scale(1.3);
+            border: 6px solid gold;
+            box-shadow: 0 0 30px gold;
+        }
+
+        .theme-btn span {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .theme-btn:hover span {
+            bottom: -35px;
+            opacity: 1;
+        }
+
+        /* Theme colors */
+        .theme-ocean { background: linear-gradient(145deg, #00b4d8, #0077b6); }
+        .theme-jungle { background: linear-gradient(145deg, #2e7d32, #1b5e20); }
+        .theme-space { background: linear-gradient(145deg, #4a1d6d, #240b36); }
+        .theme-candy { background: linear-gradient(145deg, #ff9a9e, #fad0c4); }
+        .theme-desert { background: linear-gradient(145deg, #f4d03f, #e67e22); }
+        .theme-arctic { background: linear-gradient(145deg, #a0d2eb, #c7e9fb); }
+
+        .game-wrapper {
+            border-radius: 80px 80px 40px 40px;
+            padding: 30px 20px;
+            box-shadow: 0 25px 0 rgba(0,0,0,0.3), 0 30px 30px rgba(0,0,0,0.4);
+            border: 8px solid;
+            width: 100%;
+            transition: all 0.4s ease;
+            margin-bottom: 30px;
+        }
+
+        .question-dial {
+            background: rgba(255, 255, 255, 0.9);
+            border: 12px solid;
+            border-radius: 120px;
+            width: 85%;
+            margin: 0 auto 40px auto;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 15px 0 rgba(0,0,0,0.2), inset 0 -8px 0 rgba(0,0,0,0.1);
+            position: relative;
+            transform: perspective(800px) rotateX(2deg);
+            backdrop-filter: blur(5px);
+        }
+
+        #question-text {
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: 5px 5px 0 rgba(0,0,0,0.2);
+            letter-spacing: 3px;
+            margin: 0;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .battle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .calculator {
+            border-radius: 50px 50px 30px 30px;
+            padding: 25px 20px 35px 20px;
+            box-shadow: 0 18px 0 rgba(0,0,0,0.3), 0 20px 20px rgba(0,0,0,0.3);
+            border: 5px solid;
+            width: 280px;
+            flex-shrink: 0;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .calculator:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .display {
+            background: rgba(255, 255, 255, 0.9);
+            border: 6px solid;
+            border-radius: 40px;
+            padding: 20px 15px;
+            font-size: 2.8rem;
+            text-align: right;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            margin-bottom: 30px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+            overflow-x: auto;
+            white-space: nowrap;
+            backdrop-filter: blur(5px);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .display.correct-flash {
+            animation: correctFlash 0.5s ease;
+        }
+
+        .display.wrong-flash {
+            animation: wrongFlash 0.5s ease;
+        }
+
+        @keyframes correctFlash {
+            0% { background-color: #ffffff; transform: scale(1); }
+            30% { background-color: #aaffaa; transform: scale(1.05); box-shadow: 0 0 30px #00ff00; }
+            100% { background-color: #ffffff; transform: scale(1); }
+        }
+
+        @keyframes wrongFlash {
+            0% { background-color: #ffffff; transform: scale(1); }
+            30% { background-color: #ffaaaa; transform: scale(0.95); box-shadow: 0 0 30px #ff0000; }
+            100% { background-color: #ffffff; transform: scale(1); }
+        }
+
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .calc-btn {
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            border-radius: 30px;
+            padding: 20px 8px;
+            font-size: 2.2rem;
+            font-weight: bold;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.2), 0 8px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Comic Sans MS', sans-serif;
+        }
+
+        .calc-btn:active {
+            transform: translateY(8px);
+            box-shadow: 0 0px 0 rgba(0,0,0,0.2), 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .calc-btn.enter {
+            grid-column: span 2;
+            font-size: 2rem;
+        }
+
+        .tug-war-central {
+            flex-grow: 1;
+            min-width: 450px;
+            padding: 20px 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 120px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 15px 0 rgba(0,0,0,0.2);
+        }
+
+        .kids-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 0 40px;
+            position: relative;
+        }
+
+        .kid {
+            font-size: 5.5rem;
+            filter: drop-shadow(8px 12px 0 rgba(0,0,0,0.2));
+            transition: all 0.3s;
+            position: relative;
+            animation: idleBounce 2s infinite ease-in-out;
+        }
+
+        @keyframes idleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .kid-left {
+            transform: scaleX(-1);
+        }
+
+        .kid.happy {
+            animation: happyJump 0.6s ease;
+        }
+
+        @keyframes happyJump {
+            0%, 100% { transform: translateY(0) scale(1); }
+            30% { transform: translateY(-30px) scale(1.2); filter: drop-shadow(0 0 20px gold); }
+            60% { transform: translateY(-15px) scale(1.1); }
+        }
+
+        .kid.angry {
+            animation: angryShake 0.5s ease;
+        }
+
+        @keyframes angryShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-15px) rotate(-5deg); }
+            40% { transform: translateX(15px) rotate(5deg); }
+            60% { transform: translateX(-10px) rotate(-3deg); }
+            80% { transform: translateX(10px) rotate(3deg); }
+        }
+
+        .kid.sad {
+            animation: sadCry 0.8s ease;
+        }
+
+        @keyframes sadCry {
+            0%, 100% { transform: translateY(0) scale(1); }
+            30% { transform: translateY(10px) scale(0.9); filter: drop-shadow(0 0 10px blue); }
+            60% { transform: translateY(5px) scale(0.95); }
+        }
+
+        /* Emotion bubble - only ONE at a time */
+        .emotion-bubble {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3.5rem;
+            background: white;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.2), 0 10px 20px rgba(0,0,0,0.3);
+            z-index: 100;
+            animation: bubblePop 0.5s ease forwards;
+            border: 4px solid gold;
+        }
+
+        @keyframes bubblePop {
+            0% { transform: translateX(-50%) scale(0); opacity: 0; }
+            50% { transform: translateX(-50%) scale(1.3); }
+            100% { transform: translateX(-50%) scale(1); opacity: 1; }
+        }
+
+        .rope-stage {
+            position: relative;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            margin: 0 0 30px 0;
+        }
+
+        .rope {
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(90deg, #8b5a2b, #c79a5e, #8b5a2b);
+            border-radius: 30px;
+            box-shadow: 0 8px 0 #5f3d1f, 0 12px 20px rgba(0,0,0,0.3);
+            border: 3px solid #4a2a0f;
+            z-index: 1;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: ropeWiggle 3s infinite;
+        }
+
+        @keyframes ropeWiggle {
+            0%, 100% { transform: translateY(-50%) rotate(0deg); }
+            25% { transform: translateY(-50%) rotate(0.5deg); }
+            75% { transform: translateY(-50%) rotate(-0.5deg); }
+        }
+
+        .tug-marker {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-top: 65px solid #ff3333;
+            filter: drop-shadow(0 15px 8px rgba(0,0,0,0.3));
+            z-index: 10;
+            transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            top: -5px;
+            margin-left: -40px;
+            animation: bounceMarker 1.2s infinite;
+        }
+
+        @keyframes bounceMarker {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        .rope-ends {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 25px;
+            box-sizing: border-box;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+        }
+
+        .rope-end {
+            width: 45px;
+            height: 45px;
+            background: #b97c3b;
+            border-radius: 50%;
+            border: 5px solid #5f3d1f;
+            box-shadow: 0 6px 0 #3b260f;
+        }
+
+        /* === ANIMATED SCOREBOARD === */
+        .score-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 2.3rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+            padding: 20px 35px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 70px;
+            margin-top: 20px;
+            border: 4px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-number {
+            background: gold;
+            color: #333;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 2.8rem;
+            border: 4px solid white;
+            box-shadow: 0 5px 0 #b8860b;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 5;
+        }
+
+        .score-number.pop {
+            animation: scorePop 0.5s ease;
+        }
+        @keyframes scorePop {
+            0%, 100% { transform: scale(1); background: gold; }
+            30% { transform: scale(1.4) rotate(6deg); background: #ffd700; box-shadow: 0 0 30px gold; }
+            70% { transform: scale(1.2) rotate(-3deg); background: #ffd700; }
+        }
+
+        .score-area::before {
+            content: '';
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
+            background: linear-gradient(45deg, gold, orange, hotpink, cyan, gold);
+            background-size: 300% 300%;
+            border-radius: 75px;
+            z-index: 0;
+            animation: borderGlow 6s ease infinite;
+            opacity: 0.8;
+            filter: blur(3px);
+        }
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .score-area .sparkle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 15px gold;
+            width: 8px;
+            height: 8px;
+            pointer-events: none;
+            z-index: 6;
+            animation: sparkleFloat 2s infinite ease-in-out;
+        }
+        @keyframes sparkleFloat {
+            0% { opacity: 0; transform: scale(0) translateY(0); }
+            50% { opacity: 1; transform: scale(1.2) translateY(-10px); }
+            100% { opacity: 0; transform: scale(0) translateY(-20px); }
+        }
+
+        .fact-area {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            padding: 15px 25px;
+            margin: 15px 0 0 0;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            border: 4px solid gold;
+            box-shadow: 0 8px 0 #b8860b;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            animation: factPop 1s ease;
+        }
+
+        @keyframes factPop {
+            0% { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+            50% { transform: scale(1.1) rotate(2deg); }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+
+        .win-message {
+            text-align: center;
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: gold;
+            text-shadow: 5px 5px 0 #ff6b00, 8px 8px 0 rgba(0,0,0,0.3);
+            animation: winPop 0.6s infinite alternate;
+            margin-top: 15px;
+            min-height: 85px;
+        }
+
+        @keyframes winPop {
+            from { transform: scale(0.9) rotate(-2deg); }
+            to { transform: scale(1.2) rotate(2deg); }
+        }
+
+        .kid-shadow {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 3px 3px 0 black;
+            text-align: center;
+        }
+
+        .pulling-left {
+            animation: pullLeftAnim 0.4s ease;
+        }
+        .pulling-right {
+            animation: pullRightAnim 0.4s ease;
+        }
+
+        @keyframes pullLeftAnim {
+            0%, 100% { transform: scaleX(-1) translateX(0); }
+            50% { transform: scaleX(-1) translateX(-25px) rotate(-5deg); }
+        }
+
+        @keyframes pullRightAnim {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(25px) rotate(5deg); }
+        }
+
+        /* K17 Credits at Bottom */
+        .k17-credits-bottom {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            padding: 25px 30px;
+            border-radius: 60px;
+            margin-top: 30px;
+            text-align: center;
+            border: 6px solid gold;
+            box-shadow: 0 15px 0 #8b6b4d, 0 20px 20px rgba(0,0,0,0.3);
+            width: 100%;
+        }
+
+        .k17-credits-bottom h2 {
+            font-size: 3rem;
+            color: gold;
+            text-shadow: 4px 4px 0 #8b0000, 6px 6px 0 #000;
+            margin: 0 0 15px 0;
+            letter-spacing: 3px;
+        }
+
+        .k17-credits-bottom .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .k17-credits-bottom .social-item {
+            background: linear-gradient(145deg, #333, #222);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 4px solid gold;
+            box-shadow: 0 8px 0 #8b6b4d;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .k17-credits-bottom .social-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 13px 0 #8b6b4d;
+            background: linear-gradient(145deg, #444, #333);
+            border-color: white;
+        }
+
+        .k17-credits-bottom .social-item:active {
+            transform: translateY(8px);
+            box-shadow: 0 0px 0 #8b6b4d;
+        }
+
+        /* Custom Video Upload Area */
+        .custom-video-area {
+            background: rgba(0,0,0,0.4);
+            border-radius: 60px;
+            padding: 15px 25px;
+            margin: 20px 0 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            backdrop-filter: blur(5px);
+            border: 4px solid gold;
+            color: white;
+            font-size: 1.8rem;
+        }
+        .upload-btn {
+            background: linear-gradient(145deg, #ff6b6b, #c92a2a);
+            border: 4px solid white;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #8b0000;
+            transition: 0.3s;
+        }
+        .upload-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 13px 0 #8b0000;
+        }
+        .upload-btn:active {
+            transform: translateY(8px);
+            box-shadow: 0 0px 0 #8b0000;
+        }
+        .video-indicator {
+            font-size: 1.8rem;
+            background: #333;
+            padding: 10px 25px;
+            border-radius: 40px;
+            border: 2px solid gold;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        /* Hidden video element */
+        #backgroundVideo {
+            display: none;
+        }
+
+        @media (max-width: 1100px) {
+            .battle-row { justify-content: center; }
+            #question-text { font-size: 3rem; }
+            .k17-credits-bottom h2 { font-size: 2.5rem; }
+            .k17-credits-bottom .social-item { font-size: 1.5rem; padding: 12px 20px; }
+        }
+    </style>
+</head>
+<body id="mainBody">
+    <!-- Start Music Button - Must click this first! -->
+    <div class="start-music-btn" id="startMusicBtn" onclick="startMusic()">
+        🎵 CLICK TO START MUSIC! 🎵
+    </div>
+
+    <!-- Control buttons -->
+    <div class="controls">
+        <div class="control-btn" id="soundToggle" onclick="toggleSound()">🔊 ON</div>
+        <div class="control-btn" id="musicToggle" onclick="toggleMusic()">🎵 ON</div>
+    </div>
+
+    <div class="main-container">
+        <!-- Theme Selector -->
+        <div class="theme-selector">
+            <div class="theme-btn theme-ocean active" onclick="changeTheme('ocean')" data-theme="ocean">
+                <span>🌊 Ocean</span>
+            </div>
+            <div class="theme-btn theme-jungle" onclick="changeTheme('jungle')" data-theme="jungle">
+                <span>🌴 Jungle</span>
+            </div>
+            <div class="theme-btn theme-space" onclick="changeTheme('space')" data-theme="space">
+                <span>🚀 Space</span>
+            </div>
+            <div class="theme-btn theme-candy" onclick="changeTheme('candy')" data-theme="candy">
+                <span>🍬 Candy</span>
+            </div>
+            <div class="theme-btn theme-desert" onclick="changeTheme('desert')" data-theme="desert">
+                <span>🏜️ Desert</span>
+            </div>
+            <div class="theme-btn theme-arctic" onclick="changeTheme('arctic')" data-theme="arctic">
+                <span>❄️ Arctic</span>
+            </div>
+        </div>
+
+        <!-- Game Wrapper -->
+        <div class="game-wrapper theme-ocean" id="gameWrapper">
+            <!-- Question Dial -->
+            <div class="question-dial" id="questionDial">
+                <h1 id="question-text">5 + 3 = ?</h1>
+            </div>
+
+            <!-- Main Battle Row -->
+            <div class="battle-row">
+                <!-- Left Calculator -->
+                <div class="calculator calc-left" id="calcLeft">
+                    <div class="kid-shadow" id="leftKidName">🐟 FINNY</div>
+                    <div class="display" id="leftDisplay">0</div>
+                    <div class="buttons-grid">
+                        <button class="calc-btn" data-side="left" data-value="7">7</button>
+                        <button class="calc-btn" data-side="left" data-value="8">8</button>
+                        <button class="calc-btn" data-side="left" data-value="9">9</button>
+                        <button class="calc-btn" data-side="left" data-value="4">4</button>
+                        <button class="calc-btn" data-side="left" data-value="5">5</button>
+                        <button class="calc-btn" data-side="left" data-value="6">6</button>
+                        <button class="calc-btn" data-side="left" data-value="1">1</button>
+                        <button class="calc-btn" data-side="left" data-value="2">2</button>
+                        <button class="calc-btn" data-side="left" data-value="3">3</button>
+                        <button class="calc-btn clear" data-side="left" data-action="clear">C</button>
+                        <button class="calc-btn" data-side="left" data-value="0">0</button>
+                        <button class="calc-btn enter" data-side="left" data-action="enter">⏎</button>
+                    </div>
+                </div>
+
+                <!-- Tug of War Center -->
+                <div class="tug-war-central">
+                    <div class="kids-container">
+                        <div class="kid kid-left" id="kidLeft">🧜‍♂️</div>
+                        <div class="kid kid-right" id="kidRight">🧜‍♀️</div>
+                    </div>
+
+                    <div class="rope-stage">
+                        <div class="rope"></div>
+                        <div class="rope-ends">
+                            <div class="rope-end"></div>
+                            <div class="rope-end"></div>
+                        </div>
+                        <div id="tugMarker" class="tug-marker" style="left: 50%;"></div>
+                    </div>
+
+                    <!-- ANIMATED SCOREBOARD with sparkles & glow -->
+                    <div class="score-area" id="scoreArea">
+                        <span class="score-number" id="leftScore">0</span>
+                        <span id="themeGameName">🌊 OCEAN PULL 🌊</span>
+                        <span class="score-number" id="rightScore">0</span>
+                    </div>
+                    
+                    <!-- Fact Area -->
+                    <div id="factArea" class="fact-area">
+                        🌊 Click the theme buttons above to explore! 🌊
+                    </div>
+                    
+                    <div id="winMessage" class="win-message"></div>
+
+                    <!-- Custom Video Upload Area (hidden video element) -->
+                    <div class="custom-video-area">
+                        <span>🎬 YOUR SONG VIDEO:</span>
+                        <label class="upload-btn" id="uploadVideoBtn">📁 CHOOSE VIDEO</label>
+                        <input type="file" id="videoUpload" accept="video/*" style="display: none;">
+                        <span class="video-indicator" id="videoName">No video selected</span>
+                    </div>
+                    <video id="backgroundVideo" loop></video>
+                </div>
+
+                <!-- Right Calculator -->
+                <div class="calculator calc-right" id="calcRight">
+                    <div class="kid-shadow" id="rightKidName">🐠 CORAL</div>
+                    <div class="display" id="rightDisplay">0</div>
+                    <div class="buttons-grid">
+                        <button class="calc-btn" data-side="right" data-value="7">7</button>
+                        <button class="calc-btn" data-side="right" data-value="8">8</button>
+                        <button class="calc-btn" data-side="right" data-value="9">9</button>
+                        <button class="calc-btn" data-side="right" data-value="4">4</button>
+                        <button class="calc-btn" data-side="right" data-value="5">5</button>
+                        <button class="calc-btn" data-side="right" data-value="6">6</button>
+                        <button class="calc-btn" data-side="right" data-value="1">1</button>
+                        <button class="calc-btn" data-side="right" data-value="2">2</button>
+                        <button class="calc-btn" data-side="right" data-value="3">3</button>
+                        <button class="calc-btn clear" data-side="right" data-action="clear">C</button>
+                        <button class="calc-btn" data-side="right" data-value="0">0</button>
+                        <button class="calc-btn enter" data-side="right" data-action="enter">⏎</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- K17 CREDITS AT BOTTOM -->
+        <div class="k17-credits-bottom">
+            <h2>🔥 CREATED BY K17 🔥</h2>
+            <div class="social-links">
+                <div class="social-item" onclick="window.open('https://youtube.com/@k17_editz', '_blank')">
+                    <span>📺</span> K17_editz
+                </div>
+                <div class="social-item" onclick="window.open('https://facebook.com/kesavan.nadar.73', '_blank')">
+                    <span>📘</span> kesavan nadar
+                </div>
+                <div class="social-item" onclick="window.open('https://instagram.com/itz_me_k17', '_blank')">
+                    <span>📷</span> itz_me_k17
+                </div>
+                <div class="social-item" onclick="window.open('https://snapchat.com/add/iam_k17', '_blank')">
+                    <span>👻</span> iam_k17
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== MUSIC SYSTEM ====================
+        let musicEnabled = true;
+        let audioCtx = null;
+        let musicGainNode = null;
+        let musicInterval = null;
+        let musicStarted = false;
+        
+        // Video/Song upload elements
+        const videoUpload = document.getElementById('videoUpload');
+        const videoNameSpan = document.getElementById('videoName');
+        const backgroundVideo = document.getElementById('backgroundVideo');
+        const uploadBtn = document.getElementById('uploadVideoBtn');
+        
+        // Handle video upload
+        uploadBtn.addEventListener('click', function() {
+            videoUpload.click();
+        });
+        
+        videoUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                backgroundVideo.src = url;
+                videoNameSpan.textContent = file.name.length > 20 ? file.name.substring(0,17)+'...' : file.name;
+                
+                // If music is already started, play the video
+                if (musicStarted) {
+                    backgroundVideo.play().catch(e => console.log('Playback failed:', e));
+                }
+                
+                // Stop the generated background music
+                stopBackgroundMusic();
+                if (musicInterval) {
+                    clearInterval(musicInterval);
+                    musicInterval = null;
+                }
+            }
+        });
+        
+        function startMusic() {
+            // Hide the start button
+            document.getElementById('startMusicBtn').classList.add('hidden');
+            
+            // Create audio context (this must be done after user click)
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            musicGainNode = audioCtx.createGain();
+            musicGainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            musicGainNode.connect(audioCtx.destination);
+            
+            musicStarted = true;
+            
+            // If a video is already uploaded, play it
+            if (backgroundVideo.src) {
+                backgroundVideo.play().catch(e => console.log('Video play failed:', e));
+            } else {
+                // Otherwise start generated music
+                startBackgroundMusic();
+            }
+        }
+        
+        function toggleMusic() {
+            if (!musicStarted) {
+                alert('Please click the START MUSIC button first!');
+                return;
+            }
+            
+            musicEnabled = !musicEnabled;
+            const musicToggle = document.getElementById('musicToggle');
+            musicToggle.textContent = musicEnabled ? '🎵 ON' : '🎵 OFF';
+            musicToggle.classList.toggle('off', !musicEnabled);
+            
+            if (musicEnabled) {
+                if (backgroundVideo.src) {
+                    backgroundVideo.play().catch(e => console.log('Video play failed:', e));
+                } else {
+                    startBackgroundMusic();
+                }
+            } else {
+                backgroundVideo.pause();
+                stopBackgroundMusic();
+            }
+        }
+        
+        function startBackgroundMusic() {
+            if (!musicEnabled || !musicStarted || !audioCtx) return;
+            
+            // Stop any existing music
+            stopBackgroundMusic();
+            
+            // Create a fun background melody
+            const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25]; // C4 to C5
+            
+            musicInterval = setInterval(() => {
+                if (!musicEnabled || !audioCtx || audioCtx.state === 'closed') return;
+                
+                const now = audioCtx.currentTime;
+                const oscillator = audioCtx.createOscillator();
+                const noteGain = audioCtx.createGain();
+                
+                oscillator.type = 'triangle';
+                oscillator.frequency.value = notes[Math.floor(Math.random() * notes.length)];
+                
+                oscillator.connect(noteGain);
+                noteGain.connect(musicGainNode);
+                
+                noteGain.gain.setValueAtTime(0.05, now);
+                noteGain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                
+                oscillator.start(now);
+                oscillator.stop(now + 0.3);
+            }, 800);
+        }
+        
+        function stopBackgroundMusic() {
+            if (musicInterval) {
+                clearInterval(musicInterval);
+                musicInterval = null;
+            }
+        }
+
+        // ==================== SOUND EFFECTS SYSTEM ====================
+        let soundEnabled = true;
+        
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const soundToggle = document.getElementById('soundToggle');
+            soundToggle.textContent = soundEnabled ? '🔊 ON' : '🔈 OFF';
+            soundToggle.classList.toggle('off', !soundEnabled);
+            
+            if (soundEnabled) {
+                playSound('click');
+            }
+        }
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            
+            try {
+                const sfxCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = sfxCtx.createOscillator();
+                const gainNode = sfxCtx.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(sfxCtx.destination);
+                
+                switch(type) {
+                    case 'correct':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.setValueAtTime(523.25, sfxCtx.currentTime);
+                        oscillator.frequency.setValueAtTime(659.25, sfxCtx.currentTime + 0.1);
+                        oscillator.frequency.setValueAtTime(783.99, sfxCtx.currentTime + 0.2);
+                        gainNode.gain.setValueAtTime(0.3, sfxCtx.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, sfxCtx.currentTime + 0.4);
+                        oscillator.start();
+                        oscillator.stop(sfxCtx.currentTime + 0.4);
+                        break;
+                        
+                    case 'wrong':
+                        oscillator.type = 'sawtooth';
+                        oscillator.frequency.setValueAtTime(220, sfxCtx.currentTime);
+                        oscillator.frequency.setValueAtTime(196, sfxCtx.currentTime + 0.1);
+                        gainNode.gain.setValueAtTime(0.2, sfxCtx.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, sfxCtx.currentTime + 0.2);
+                        oscillator.start();
+                        oscillator.stop(sfxCtx.currentTime + 0.2);
+                        break;
+                        
+                    case 'click':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.setValueAtTime(800, sfxCtx.currentTime);
+                        gainNode.gain.setValueAtTime(0.1, sfxCtx.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, sfxCtx.currentTime + 0.05);
+                        oscillator.start();
+                        oscillator.stop(sfxCtx.currentTime + 0.05);
+                        break;
+                        
+                    case 'win':
+                        oscillator.type = 'square';
+                        oscillator.frequency.setValueAtTime(523.25, sfxCtx.currentTime);
+                        oscillator.frequency.setValueAtTime(659.25, sfxCtx.currentTime + 0.15);
+                        oscillator.frequency.setValueAtTime(783.99, sfxCtx.currentTime + 0.3);
+                        oscillator.frequency.setValueAtTime(1046.50, sfxCtx.currentTime + 0.45);
+                        gainNode.gain.setValueAtTime(0.3, sfxCtx.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, sfxCtx.currentTime + 0.8);
+                        oscillator.start();
+                        oscillator.stop(sfxCtx.currentTime + 0.8);
+                        break;
+                        
+                    case 'theme':
+                        oscillator.type = 'triangle';
+                        oscillator.frequency.setValueAtTime(659.25, sfxCtx.currentTime);
+                        oscillator.frequency.setValueAtTime(523.25, sfxCtx.currentTime + 0.1);
+                        oscillator.frequency.setValueAtTime(783.99, sfxCtx.currentTime + 0.2);
+                        oscillator.frequency.setValueAtTime(659.25, sfxCtx.currentTime + 0.3);
+                        gainNode.gain.setValueAtTime(0.2, sfxCtx.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, sfxCtx.currentTime + 0.4);
+                        oscillator.start();
+                        oscillator.stop(sfxCtx.currentTime + 0.4);
+                        break;
+                }
+            } catch(e) {
+                console.log('Audio error:', e);
+            }
+        }
+
+        // ==================== THEME FACTS ====================
+        const themeFacts = {
+            ocean: [
+                "🌊 1: Oceans cover 71% of Earth!",
+                "🌊 2: The Pacific is the largest ocean!",
+                "🌊 3: Marine animals use sound to communicate!",
+                "🌊 4: Coral reefs are called 'rainforests of the sea'!",
+                "🌊 5: The ocean has mountains taller than Everest!",
+                "🌊 6: Most volcanic activity happens in oceans!",
+                "🌊 7: We've explored less than 5% of oceans!",
+                "🌊 8: The Great Barrier Reef is visible from space!",
+                "🌊 9: Ocean plants produce 70% of our oxygen!",
+                "🌊 10: The deepest point is 11km down!"
+            ],
+            jungle: [
+                "🌴 1: Jungles cover only 6% of Earth!",
+                "🌴 2: Half of all species live in jungles!",
+                "🌴 3: A single jungle can have 1000+ tree types!",
+                "🌴 4: Jungle plants help make medicines!",
+                "🌴 5: Some frogs glow in the dark!",
+                "🌴 6: Jungles create their own rain!",
+                "🌴 7: Monkeys use tools like sticks!",
+                "🌴 8: Butterflies taste with their feet!",
+                "🌴 9: Jungle vines can be as thick as trees!",
+                "🌴 10: Jungles are millions of years old!"
+            ],
+            space: [
+                "🚀 1: One million Earths fit in the Sun!",
+                "🚀 2: Space is completely silent!",
+                "🚀 3: There's a volcano on Mars 3x taller than Everest!",
+                "🚀 4: Jupiter has 79 moons!",
+                "🚀 5: Footprints on the Moon last millions of years!",
+                "🚀 6: One day on Venus is longer than one year!",
+                "🚀 7: Neutron stars spin 600 times per second!",
+                "🚀 8: There's a giant water cloud in space!",
+                "🚀 9: Some stars are diamonds!",
+                "🚀 10: We're made of stardust!"
+            ],
+            candy: [
+                "🍬 1: Chocolate was once used as money!",
+                "🍬 2: Gummy bears were invented in Germany!",
+                "🍬 3: Cotton candy was made by a dentist!",
+                "🍬 4: M&Ms were made for soldiers!",
+                "🍬 5: Lollipops were first called 'dum dums'!",
+                "🍬 6: Candy canes were originally straight!",
+                "🍬 7: The largest chocolate bar weighed 5,000kg!",
+                "🍬 8: Bubble gum was invented in 1928!",
+                "🍬 9: Red is the most popular candy color!",
+                "🍬 10: October 28th is National Candy Day!"
+            ],
+            desert: [
+                "🏜️ 1: Deserts cover 1/3 of Earth!",
+                "🏜️ 2: Antarctica is a desert (coldest!)",
+                "🏜️ 3: Sahara is as big as the US!",
+                "🏜️ 4: Camels can drink 100L in 10 minutes!",
+                "🏜️ 5: Desert foxes have big ears to stay cool!",
+                "🏜️ 6: Some deserts get snow!",
+                "🏜️ 7: Sand dunes can sing!",
+                "🏜️ 8: Cactus can live 200 years!",
+                "🏜️ 9: Desert tortoises dig burrows to stay cool!",
+                "🏜️ 10: The Atacama desert has no rain for years!"
+            ],
+            arctic: [
+                "❄️ 1: Polar bears have black skin!",
+                "❄️ 2: Arctic means 'bear' in Greek!",
+                "❄️ 3: Penguins live in Antarctic, not Arctic!",
+                "❄️ 4: Icebergs float with 90% underwater!",
+                "❄️ 5: The Arctic has midnight sun in summer!",
+                "❄️ 6: Some fish have antifreeze blood!",
+                "❄️ 7: Arctic foxes change color with seasons!",
+                "❄️ 8: The North Pole moves 10km per year!",
+                "❄️ 9: Narwhals are called 'unicorns of the sea'!",
+                "❄️ 10: Arctic hares can run 60km/h!"
+            ]
+        };
+
+        // Emotion reactions for each theme (single emoji reactions)
+        const themeEmotions = {
+            ocean: { happy: ['😄', '😊', '😍', '🥳', '😎'], angry: ['😠', '😤', '🤬', '👿', '😡'], sad: ['😢', '😭', '🥺', '😔', '😞'] },
+            jungle: { happy: ['😄', '😊', '😍', '🥳', '😎'], angry: ['😠', '😤', '🤬', '👿', '😡'], sad: ['😢', '😭', '🥺', '😔', '😞'] },
+            space: { happy: ['😄', '😊', '😍', '🥳', '😎'], angry: ['😠', '😤', '🤬', '👿', '😡'], sad: ['😢', '😭', '🥺', '😔', '😞'] },
+            candy: { happy: ['😄', '😊', '😍', '🥳', '😎'], angry: ['😠', '😤', '🤬', '👿', '😡'], sad: ['😢', '😭', '🥺', '😔', '😞'] },
+            desert: { happy: ['😄', '😊', '😍', '🥳', '😎'], angry: ['😠', '😤', '🤬', '👿', '😡'], sad: ['😢', '😭', '🥺', '😔', '😞'] },
+            arctic: { happy: ['😄', '😊', '😍', '🥳', '😎'], angry: ['😠', '😤', '🤬', '👿', '😡'], sad: ['😢', '😭', '🥺', '😔', '😞'] }
+        };
+
+        // ==================== THEME SYSTEM ====================
+        const themes = {
+            ocean: { bodyBg: 'linear-gradient(135deg, #001d3d, #003566)', wrapperBg: 'linear-gradient(145deg, #48cae4, #0096c7)', borderColor: '#023e8a', leftKid: '🧜‍♂️', rightKid: '🧜‍♀️', leftName: '🐟 FINNY', rightName: '🐠 CORAL', gameName: '🌊 OCEAN PULL 🌊', questionBorder: '#0077be', accent: '#00b4d8', facts: themeFacts.ocean, emotions: themeEmotions.ocean },
+            jungle: { bodyBg: 'linear-gradient(135deg, #1b5e20, #2e7d32)', wrapperBg: 'linear-gradient(145deg, #66bb6a, #2e7d32)', borderColor: '#bf4e0c', leftKid: '🦍', rightKid: '🐒', leftName: '🦍 GORILLA', rightName: '🐒 MONKEY', gameName: '🌴 JUNGLE SWING 🌴', questionBorder: '#8b5a2b', accent: '#4caf50', facts: themeFacts.jungle, emotions: themeEmotions.jungle },
+            space: { bodyBg: 'linear-gradient(135deg, #0b0b2b, #1a1a3a)', wrapperBg: 'linear-gradient(145deg, #7b2cbf, #3c096c)', borderColor: '#ff9e00', leftKid: '👨‍🚀', rightKid: '👩‍🚀', leftName: '🚀 ASTRO', rightName: '🛸 NOVA', gameName: '✨ SPACE TUG ✨', questionBorder: '#ff6d00', accent: '#9d4edd', facts: themeFacts.space, emotions: themeEmotions.space },
+            candy: { bodyBg: 'linear-gradient(135deg, #ff758c, #ff7eb3)', wrapperBg: 'linear-gradient(145deg, #ffb6c1, #ff69b4)', borderColor: '#8b4513', leftKid: '🍬', rightKid: '🍭', leftName: '🍫 CHOC', rightName: '🍬 CANDY', gameName: '🍭 CANDY PULL 🍬', questionBorder: '#ff1493', accent: '#ff9a9e', facts: themeFacts.candy, emotions: themeEmotions.candy },
+            desert: { bodyBg: 'linear-gradient(135deg, #b43e1a, #d96c2b)', wrapperBg: 'linear-gradient(145deg, #f1c40f, #e67e22)', borderColor: '#784421', leftKid: '🐪', rightKid: '🏜️', leftName: '🐪 CAMEL', rightName: '🦂 SCORPION', gameName: '🏜️ DESERT PULL 🏜️', questionBorder: '#c47e2b', accent: '#f39c12', facts: themeFacts.desert, emotions: themeEmotions.desert },
+            arctic: { bodyBg: 'linear-gradient(135deg, #2c3e50, #3498db)', wrapperBg: 'linear-gradient(145deg, #d0f0fd, #a0d2eb)', borderColor: '#2c3e50', leftKid: '🐧', rightKid: '🐻‍❄️', leftName: '🐧 PINGU', rightName: '❄️ POLAR', gameName: '❄️ ARCTIC TUG ❄️', questionBorder: '#5dade2', accent: '#85c1e9', facts: themeFacts.arctic, emotions: themeEmotions.arctic }
+        };
+
+        // Game state
+        let currentQuestion = { text: '5 + 3 = ?', answer: 8 };
+        let tugPosition = 0;
+        const MAX_TUG = 5;
+        let leftWins = 0, rightWins = 0;
+        let leftInput = '', rightInput = '';
+        let currentTheme = 'ocean';
+
+        // DOM Elements
+        const questionEl = document.getElementById('question-text');
+        const tugMarker = document.getElementById('tugMarker');
+        const winMessageEl = document.getElementById('winMessage');
+        const leftScoreEl = document.getElementById('leftScore');
+        const rightScoreEl = document.getElementById('rightScore');
+        const leftDisplayEl = document.getElementById('leftDisplay');
+        const rightDisplayEl = document.getElementById('rightDisplay');
+        const kidLeft = document.getElementById('kidLeft');
+        const kidRight = document.getElementById('kidRight');
+        const leftKidName = document.getElementById('leftKidName');
+        const rightKidName = document.getElementById('rightKidName');
+        const themeGameName = document.getElementById('themeGameName');
+        const gameWrapper = document.getElementById('gameWrapper');
+        const mainBody = document.getElementById('mainBody');
+        const questionDial = document.getElementById('questionDial');
+        const factArea = document.getElementById('factArea');
+        const scoreArea = document.getElementById('scoreArea');
+
+        // Function to add sparkles to scoreboard
+        function addSparkles() {
+            const oldSparkles = document.querySelectorAll('.score-area .sparkle');
+            oldSparkles.forEach(s => s.remove());
+            for (let i = 0; i < 12; i++) {
+                const spark = document.createElement('div');
+                spark.className = 'sparkle';
+                spark.style.left = Math.random() * 100 + '%';
+                spark.style.top = Math.random() * 100 + '%';
+                spark.style.animationDelay = Math.random() * 2 + 's';
+                spark.style.width = (Math.random() * 10 + 4) + 'px';
+                spark.style.height = spark.style.width;
+                spark.style.background = `radial-gradient(circle, gold, orange)`;
+                scoreArea.appendChild(spark);
+            }
+        }
+        addSparkles();
+        setInterval(addSparkles, 6000);
+
+        // Function to show emotion on kid (ONLY ONE EMOJI)
+        function showEmotion(side, emotion) {
+            const kid = side === 'left' ? kidLeft : kidRight;
+            const theme = themes[currentTheme];
+            const emotions = theme.emotions[emotion];
+            const randomEmotion = emotions[Math.floor(Math.random() * emotions.length)];
+            
+            const existingBubbles = document.querySelectorAll('.emotion-bubble');
+            existingBubbles.forEach(bubble => bubble.remove());
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'emotion-bubble';
+            bubble.textContent = randomEmotion;
+            kid.appendChild(bubble);
+            
+            setTimeout(() => {
+                if (bubble.parentNode) {
+                    bubble.remove();
+                }
+            }, 800);
+            
+            kid.classList.add(emotion);
+            setTimeout(() => {
+                kid.classList.remove(emotion);
+            }, 800);
+        }
+
+        // Function to show themed fact based on score
+        function showFact(theme, score) {
+            const facts = themes[theme].facts;
+            const factIndex = (score - 1) % 10;
+            factArea.textContent = facts[factIndex];
+            factArea.style.animation = 'none';
+            factArea.offsetHeight;
+            factArea.style.animation = 'factPop 1s ease';
+        }
+
+        // Function to change theme
+        window.changeTheme = function(themeName) {
+            const theme = themes[themeName];
+            currentTheme = themeName;
+            
+            playSound('theme');
+            
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-theme="${themeName}"]`).classList.add('active');
+
+            gameWrapper.className = `game-wrapper theme-${themeName}`;
+            mainBody.style.background = theme.bodyBg;
+            
+            kidLeft.textContent = theme.leftKid;
+            kidRight.textContent = theme.rightKid;
+            
+            leftKidName.textContent = theme.leftName;
+            rightKidName.textContent = theme.rightName;
+            
+            themeGameName.textContent = theme.gameName;
+            questionDial.style.borderColor = theme.questionBorder;
+            
+            const calcLeft = document.getElementById('calcLeft');
+            const calcRight = document.getElementById('calcRight');
+            calcLeft.style.background = theme.wrapperBg;
+            calcRight.style.background = theme.wrapperBg;
+            
+            factArea.textContent = theme.facts[0];
+            factArea.style.animation = 'none';
+            factArea.offsetHeight;
+            factArea.style.animation = 'factPop 1s ease';
+            
+            winMessageEl.textContent = '🎨 THEME CHANGED! 🎨';
+            setTimeout(() => {
+                if (tugPosition >= MAX_TUG || tugPosition <= -MAX_TUG) {
+                } else {
+                    winMessageEl.textContent = '';
+                }
+            }, 1500);
+        };
+
+        function updateTugUI() {
+            const minPercent = 10;
+            const maxPercent = 90;
+            const percent = minPercent + ((tugPosition + MAX_TUG) / (MAX_TUG * 2)) * (maxPercent - minPercent);
+            tugMarker.style.left = percent + '%';
+        }
+
+        function generateQuestion() {
+            const operations = ['+', '-', '×', '÷'];
+            const op = operations[Math.floor(Math.random() * operations.length)];
+            let num1, num2, answer, text;
+
+            switch(op) {
+                case '+':
+                    num1 = Math.floor(Math.random() * 20) + 1;
+                    num2 = Math.floor(Math.random() * 20) + 1;
+                    answer = num1 + num2;
+                    text = `${num1} + ${num2} = ?`;
+                    break;
+                case '-':
+                    num1 = Math.floor(Math.random() * 20) + 10;
+                    num2 = Math.floor(Math.random() * 10) + 1;
+                    answer = num1 - num2;
+                    text = `${num1} - ${num2} = ?`;
+                    break;
+                case '×':
+                    num1 = Math.floor(Math.random() * 9) + 1;
+                    num2 = Math.floor(Math.random() * 9) + 1;
+                    answer = num1 * num2;
+                    text = `${num1} × ${num2} = ?`;
+                    break;
+                case '÷':
+                    num2 = Math.floor(Math.random() * 5) + 2;
+                    answer = Math.floor(Math.random() * 9) + 2;
+                    num1 = num2 * answer;
+                    text = `${num1} ÷ ${num2} = ?`;
+                    break;
+            }
+
+            currentQuestion = { text, answer };
+            questionEl.textContent = text;
+            
+            questionEl.style.animation = 'none';
+            questionEl.offsetHeight;
+            questionEl.style.animation = 'float 3s infinite ease-in-out';
+        }
+
+        function checkAnswer(side, inputValue) {
+            const answer = parseFloat(inputValue);
+            if (isNaN(answer)) return false;
+
+            if (answer === currentQuestion.answer) {
+                playSound('correct');
+                
+                if (side === 'left') {
+                    leftDisplayEl.classList.add('correct-flash');
+                    setTimeout(() => leftDisplayEl.classList.remove('correct-flash'), 500);
+                    
+                    showEmotion(side, 'happy');
+                    
+                    tugPosition = Math.max(tugPosition - 1, -MAX_TUG);
+                    kidLeft.classList.add('pulling-left');
+                    setTimeout(() => kidLeft.classList.remove('pulling-left'), 400);
+                } else {
+                    rightDisplayEl.classList.add('correct-flash');
+                    setTimeout(() => rightDisplayEl.classList.remove('correct-flash'), 500);
+                    
+                    showEmotion(side, 'happy');
+                    
+                    tugPosition = Math.min(tugPosition + 1, MAX_TUG);
+                    kidRight.classList.add('pulling-right');
+                    setTimeout(() => kidRight.classList.remove('pulling-right'), 400);
+                }
+
+                updateTugUI();
+
+                if (tugPosition <= -MAX_TUG) {
+                    leftWins++;
+                    leftScoreEl.textContent = leftWins;
+                    leftScoreEl.classList.add('pop');
+                    setTimeout(() => leftScoreEl.classList.remove('pop'), 500);
+                    
+                    winMessageEl.textContent = '🎉 LEFT TEAM WINS! 🎉';
+                    playSound('win');
+                    
+                    showFact(currentTheme, leftWins);
+                    
+                    kidLeft.style.animation = 'none';
+                    kidLeft.offsetHeight;
+                    kidLeft.style.animation = 'pullLeftAnim 0.5s 3';
+                    
+                    setTimeout(() => {
+                        tugPosition = 0;
+                        winMessageEl.textContent = '';
+                        updateTugUI();
+                        kidLeft.style.animation = '';
+                    }, 2000);
+                } 
+                else if (tugPosition >= MAX_TUG) {
+                    rightWins++;
+                    rightScoreEl.textContent = rightWins;
+                    rightScoreEl.classList.add('pop');
+                    setTimeout(() => rightScoreEl.classList.remove('pop'), 500);
+                    
+                    winMessageEl.textContent = '🎉 RIGHT TEAM WINS! 🎉';
+                    playSound('win');
+                    
+                    showFact(currentTheme, rightWins);
+                    
+                    kidRight.style.animation = 'none';
+                    kidRight.offsetHeight;
+                    kidRight.style.animation = 'pullRightAnim 0.5s 3';
+                    
+                    setTimeout(() => {
+                        tugPosition = 0;
+                        winMessageEl.textContent = '';
+                        updateTugUI();
+                        kidRight.style.animation = '';
+                    }, 2000);
+                }
+
+                generateQuestion();
+                leftInput = '';
+                rightInput = '';
+                leftDisplayEl.textContent = '0';
+                rightDisplayEl.textContent = '0';
+                
+                return true;
+            } else {
+                playSound('wrong');
+                
+                if (side === 'left') {
+                    leftDisplayEl.classList.add('wrong-flash');
+                    setTimeout(() => leftDisplayEl.classList.remove('wrong-flash'), 500);
+                    
+                    const emotions = ['angry', 'sad'];
+                    const randomEmotion = emotions[Math.floor(Math.random() * emotions.length)];
+                    showEmotion(side, randomEmotion);
+                    
+                    leftDisplayEl.style.transform = 'translateX(5px)';
+                    setTimeout(() => { leftDisplayEl.style.transform = ''; }, 200);
+                } else {
+                    rightDisplayEl.classList.add('wrong-flash');
+                    setTimeout(() => rightDisplayEl.classList.remove('wrong-flash'), 500);
+                    
+                    const emotions = ['angry', 'sad'];
+                    const randomEmotion = emotions[Math.floor(Math.random() * emotions.length)];
+                    showEmotion(side, randomEmotion);
+                    
+                    rightDisplayEl.style.transform = 'translateX(5px)';
+                    setTimeout(() => { rightDisplayEl.style.transform = ''; }, 200);
+                }
+            }
+            return false;
+        }
+
+        function handleButtonClick(e) {
+            const btn = e.target;
+            const side = btn.getAttribute('data-side');
+            const value = btn.getAttribute('data-value');
+            const action = btn.getAttribute('data-action');
+            const displayEl = side === 'left' ? leftDisplayEl : rightDisplayEl;
+
+            playSound('click');
+
+            btn.style.transform = 'scale(0.9)';
+            setTimeout(() => btn.style.transform = '', 100);
+
+            if (action === 'clear') {
+                if (side === 'left') { leftInput = ''; displayEl.textContent = '0'; } 
+                else { rightInput = ''; displayEl.textContent = '0'; }
+                return;
+            }
+
+            if (action === 'enter') {
+                const input = side === 'left' ? leftInput : rightInput;
+                if (input !== '') { checkAnswer(side, input); }
+                return;
+            }
+
+            if (value !== null) {
+                if (side === 'left') { if (leftInput.length < 5) { leftInput += value; leftDisplayEl.textContent = leftInput; } } 
+                else { if (rightInput.length < 5) { rightInput += value; rightDisplayEl.textContent = rightInput; } }
+            }
+        }
+
+        document.querySelectorAll('.calc-btn').forEach(btn => {
+            btn.addEventListener('click', handleButtonClick);
+        });
+
+        // Initialize
+        generateQuestion();
+        updateTugUI();
+        changeTheme('ocean');
+
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            stopBackgroundMusic();
+            if (audioCtx) { audioCtx.close(); }
+        });
+    </script>
+</body>
+</html>
